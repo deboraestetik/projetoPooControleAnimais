@@ -265,6 +265,11 @@ public class CadastroAnimais extends javax.swing.JFrame {
         });
 
         jButton5.setText("Sair");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Controle Acões");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -477,6 +482,10 @@ public class CadastroAnimais extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um animal da tabela para excluir!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
     private void CarregaTabela() {
 
         ArrayList<Object> listaAnimal;

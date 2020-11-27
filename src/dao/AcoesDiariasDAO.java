@@ -33,7 +33,7 @@ public class AcoesDiariasDAO {
         PreparedStatement addSQL = null;
         conexao = ConexaoMySql.getConexaoMySQL();
         ResultSet rs = null;
-        ArrayList<Object> listarAcoes=new ArrayList<Object>();
+        ArrayList<Object> listarAcoes = new ArrayList<Object>();
         PreparedStatement instrucaoSQL = null;
         try {
             conexao = ConexaoMySql.getConexaoMySQL();
@@ -42,14 +42,14 @@ public class AcoesDiariasDAO {
                 addSQL.setInt(1, id);
                 rs = addSQL.executeQuery();
                 Ave ave;
-                while (rs.next()) {                 
+                while (rs.next()) {
                     AcoesDiarias acao = new AcoesMamifero(StringToBoolean(rs.getString("passear")),
-                                                            StringToBoolean(rs.getString("banho")),
-                                                            rs.getInt("id"),
-                                                            rs.getDate("dataAcao"),
-                                                            StringToBoolean(rs.getString("comerAlimento")),
-                                                            StringToBoolean(rs.getString("beberAgua")),
-                                                            rs.getFloat("qtdAlimento"));
+                            StringToBoolean(rs.getString("banho")),
+                            rs.getInt("id"),
+                            rs.getDate("dataAcao"),
+                            StringToBoolean(rs.getString("comerAlimento")),
+                            StringToBoolean(rs.getString("beberAgua")),
+                            rs.getFloat("qtdAlimento"));
                     listarAcoes.add(acao);
                 }
             } else {
@@ -57,12 +57,12 @@ public class AcoesDiariasDAO {
                 addSQL.setInt(1, id);
                 rs = addSQL.executeQuery();
                 Ave ave;
-               while (rs.next()) {                 
+                while (rs.next()) {
                     AcoesDiarias acao = new AcoesAve(rs.getInt("id"),
-                                                     rs.getDate("dataAcao"),
-                                                     StringToBoolean(rs.getString("comerAlimento")),
-                                                     StringToBoolean(rs.getString("beberAgua")),
-                                                     rs.getFloat("qtdAlimento"));
+                            rs.getDate("dataAcao"),
+                            StringToBoolean(rs.getString("comerAlimento")),
+                            StringToBoolean(rs.getString("beberAgua")),
+                            rs.getFloat("qtdAlimento"));
                     listarAcoes.add(acao);
                 }
             }
@@ -155,10 +155,47 @@ public class AcoesDiariasDAO {
 
     public static boolean ExcluirAcao(String animal, int id) {
         boolean retorno = false;
+        int linhasAfetadas = 0;
         PreparedStatement addSQL = null;
-        conexao = ConexaoMySql.getConexaoMySQL();
-        PreparedStatement instrucaoSQL = null;
-        return false;
+        try {
+            conexao = ConexaoMySql.getConexaoMySQL();
+            if (animal.equals("Mamifero")) {
+
+                addSQL = conexao.prepareStatement("DELETE FROM acoesmamifero WHERE id = ?");
+                addSQL.setInt(1, id);
+
+                linhasAfetadas = addSQL.executeUpdate();
+            } else {
+                addSQL = conexao.prepareStatement("DELETE FROM acoesave WHERE id = ?");
+                addSQL.setInt(1, id);
+
+                linhasAfetadas = addSQL.executeUpdate();
+            }
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = false;
+
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+
+            retorno = false;
+        } finally {
+
+            try {
+                if (addSQL != null) {
+                    addSQL.close();
+                }
+
+                conexao.close();
+
+            } catch (SQLException ex) {
+            }
+        }
+
+        return retorno;
+
     }
 
     public static String buscar(String tabela, int id) {

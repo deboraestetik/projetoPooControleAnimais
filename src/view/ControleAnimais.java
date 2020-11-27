@@ -310,9 +310,19 @@ public class ControleAnimais extends javax.swing.JFrame {
 
         btnAlterar.setText("Alterar");
         btnAlterar.setEnabled(false);
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -322,6 +332,11 @@ public class ControleAnimais extends javax.swing.JFrame {
         });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,7 +375,7 @@ public class ControleAnimais extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 327, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSalvar)
                             .addComponent(btnSair)))
@@ -514,9 +529,37 @@ public class ControleAnimais extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboAnimal2ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+      
+        if (tblAcoesDiarias.getRowCount() > 0) {
+            int numeroLinha = tblAcoesDiarias.getSelectedRow();
+            String idd = tblAcoesDiarias.getModel().getValueAt(numeroLinha, 0).toString();
+            int id = Integer.parseInt(idd);
+            String animal = (String) comboAnimal.getSelectedItem();
+            boolean retorno = controller.excluir(animal, id);
+
+            if (retorno == true) {
+                JOptionPane.showMessageDialog(null, "Ação excluida com Sucesso", "Exclusão realizada", JOptionPane.INFORMATION_MESSAGE);
+               // CarregaTabela();
+            } else {
+                JOptionPane.showMessageDialog(null, "Falha ao excluir ação!", "Falha", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um ação da tabela para excluir!");
+       
+    }                                
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+   
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
